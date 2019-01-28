@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+
+<!-- answer on stack overflow 
+link =>https://stackoverflow.com/questions/1369512/converting-longitude-latitude-to-x-y-on-a-map-with-calibration-points
+-->
+<html>
+
+<head>
+    <style>
+        #point,
+        #point1 {
+            font-family: Arial;
+            font-size: 18px;
+            color: #FFFF00;
+            width: 12px;
+            height: 12px;
+            text-shadow: 2px 2px #000000;
+        }
+
+        #canvas {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            z-index: -2;
+        }
+
+        html,
+        body,
+        #canvas {
+            width: 90%;
+            height: 90%;
+            overflow: hidden;
+
+
+        }
+
+        #canvas {
+            margin-left: 100px;
+            border-bottom: 2px solid black;
+            border-left: 2px solid black;
+
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="canvas">
+        <div id="text"></div>
+        <div id="text1"></div>
+        <div id="point">▼</div>
+        <div id="point1">▼</div>
+        <!--just background image
+        <img id="canvas" border="0" src="https://www.maptiler.com/img/map-home.svg">-->
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <script>
+        $(window).on("load resize", function(e) {
+
+            var w = $("#canvas").width();
+            var h = $("#canvas").height();
+
+            // lat and lang of new delhi
+            var lat = 28.644800;
+            var long = 77.216721;
+            // New York, NY (https://maps.googleapis.com/maps/api/geocode/json?address=New%20York,%20NY)
+            var lat1 = 40.91525559999999;
+            var long1 = -73.70027209999999;
+
+            //automatically update the value of x and y according to the screen size
+            var x = ((w / 360) * (180 + long)) - 9; //long to x cordinate
+            var y = ((h / 180) * (90 - lat)) - 18; //lat to y cordinate
+            var x1 = ((w / 360) * (180 + long1)) - 9;
+            var y1 = ((h / 180) * (90 - lat1)) - 18;
+
+            $("#text").text('X:' + x + ', Y:' + y).offset({
+                top: y,
+                left: x
+            });
+            $("#text1").text('X:' + x1 + ', Y:' + y1).offset({
+                top: y1,
+                left: x1
+            });
+            $("#point").offset({
+                top: y,
+                left: x
+            });
+            $("#point1").offset({
+                top: y1,
+                left: x1
+            });
+
+        });
+    </script>
+</body>
+
+</html>
